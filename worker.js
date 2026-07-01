@@ -236,8 +236,9 @@ export function renderLangsCard(langs) {
   const segments = langs
     .map((l, i) => {
       const w = Math.max(2, (l.pct / 100) * BAR_W);
-      const seg = `<rect x="${x.toFixed(1)}" y="52" width="0" height="8" fill="${LANG_COLORS[l.name] || "#9399b2"}">
-      <animate attributeName="width" from="0" to="${w.toFixed(1)}" dur="0.6s" begin="${(i * 0.08).toFixed(2)}s" fill="freeze"/></rect>`;
+      // static width = final state, so the bar renders even when SMIL never runs (camo/reduced-motion)
+      const seg = `<rect x="${x.toFixed(1)}" y="52" width="${w.toFixed(1)}" height="8" fill="${LANG_COLORS[l.name] || "#9399b2"}">
+      <animate attributeName="width" values="0;${w.toFixed(1)}" dur="0.6s" begin="${(i * 0.08).toFixed(2)}s" fill="freeze"/></rect>`;
       x += w;
       return seg;
     })
@@ -268,8 +269,8 @@ export function renderLangsCard(langs) {
 
  <g transform="translate(0,8)">
   <!-- title glyph: code brackets, gently open once on load -->
-  <g transform="translate(25,14)" opacity="0">
-    <animate attributeName="opacity" from="0" to="1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1" keyTimes="0;1" values="0;1"/>
+  <g transform="translate(25,14)">
+    <animate attributeName="opacity" values="0;1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1" keyTimes="0;1"/>
     <path class="icon" d="M6 2L1 8l5 6">
       <animateTransform attributeName="transform" type="translate" values="1.5 0;0 0" keyTimes="0;1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
     </path>

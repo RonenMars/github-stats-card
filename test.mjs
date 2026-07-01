@@ -39,5 +39,10 @@ for (const l of LANGS) {
 assert.ok(!langsSvg.includes("undefined"), "no undefined in langs SVG");
 assert.equal((langsSvg.match(/<animate /g) || []).length, 7, "6 bar segments + 1 glyph fade");
 assert.equal((langsSvg.match(/<animateTransform /g) || []).length, 2, "2 bracket ease-in transforms");
+// resting markup must be the FINAL visual state — SMIL is enhancement only
+// (GitHub camo / reduced-motion contexts may never run animations)
+for (const s of [svg, langsSvg]) {
+  assert.ok(!/(width|opacity)="0"/.test(s), "no invisible-by-default elements");
+}
 
 console.log("✓ all checks passed");
