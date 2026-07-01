@@ -13,15 +13,18 @@ export default {
     if (cached) return cached;
 
     const username = env.GITHUB_USERNAME || "RonenMars";
-    let stats;
+    const path = new URL(request.url).pathname;
+    let body;
     try {
-      stats = await fetchStats(username, env.GITHUB_TOKEN);
+      body =
+        path === "/langs"
+          ? renderLangsCard(await fetchLangs(username, env.GITHUB_TOKEN))
+          : renderCard(await fetchStats(username, env.GITHUB_TOKEN));
     } catch (err) {
       // Fail visibly but don't 500 into a broken image — render an error card.
       return svgResponse(errorCard(String(err.message || err)), 60);
     }
 
-    const body = renderCard(stats);
     const response = svgResponse(body, CACHE_SECONDS);
     ctx.waitUntil(cache.put(cacheKey, response.clone()));
     return response;
@@ -104,6 +107,40 @@ async function gql(token, query, variables) {
   return json.data;
 }
 
+const HIDDEN_LANGS = new Set(["html", "shell"]);
+const LANGS_SHOWN = 6;
+
+async function fetchLangs(username, token) {
+  if (!token) throw new Error("GITHUB_TOKEN secret is not set");
+
+  const data = await gql(
+    token,
+    `query($login:String!){
+      user(login:$login){
+        repositories(ownerAffiliations:OWNER, privacy:PUBLIC, isFork:false, first:100){
+          nodes{ languages(first:10, orderBy:{field:SIZE, direction:DESC}){
+            edges{ size node{ name } }
+          } }
+        }
+      }
+    }`,
+    { login: username }
+  );
+
+  const bytes = new Map();
+  for (const repo of data.user.repositories.nodes) {
+    for (const edge of repo.languages.edges) {
+      const name = edge.node.name;
+      if (HIDDEN_LANGS.has(name.toLowerCase())) continue;
+      bytes.set(name, (bytes.get(name) || 0) + edge.size);
+    }
+  }
+
+  const top = [...bytes.entries()].sort((a, b) => b[1] - a[1]).slice(0, LANGS_SHOWN);
+  const total = top.reduce((sum, [, size]) => sum + size, 0);
+  return top.map(([name, size]) => ({ name, pct: (size / total) * 100 }));
+}
+
 // --- rendering ----------------------------------------------------------
 
 // 3491 -> "3.5K", 39 -> "39", 512 -> "512" (K only at >=1000)
@@ -124,7 +161,7 @@ export function renderCard(s) {
   const rowSvg = rows
     .map(
       (r, i) => `
-    <g transform="translate(0,${i * 27})">
+    <g transform="translate(0,${i * 29})">
       ${r.icon}
       <text x="24" y="12" class="label">${r.label}</text><text x="160" y="12" class="value">${r.value}</text>
     </g>`
@@ -154,7 +191,7 @@ export function renderCard(s) {
   </g>
   <text x="52" y="30" class="title">A few numbers I'm proud of</text>
 
-  <g transform="translate(25,60)">${rowSvg}
+  <g transform="translate(25,52)">${rowSvg}
   </g>
 
   <g transform="translate(340,100)">
@@ -172,6 +209,90 @@ const iconPR = `<circle class="icon" cx="4" cy="3.5" r="2"/><circle class="icon"
 const iconRepo = `<path class="icon" d="M3 2h9a1 1 0 011 1v11H4a1 1 0 01-1-1z"/><path class="icon" d="M3 12a1 1 0 011-1h9"/>`;
 const iconCheck = `<path class="icon" d="M2 8.5l3.5 3.5L14 4"/>`;
 const iconMerge = `<circle class="icon" cx="4" cy="3.5" r="2"/><circle class="icon" cx="4" cy="13" r="2"/><circle class="icon" cx="13" cy="9" r="2"/><line class="icon" x1="4" y1="5.5" x2="4" y2="11"/><path class="icon" d="M4 7a5 5 0 005 5h2"/>`;
+
+// Catppuccin pastel per language; muted gray fallback for anything else.
+const LANG_COLORS = {
+  TypeScript: "#89b4fa",
+  JavaScript: "#f9e2af",
+  Python: "#94e2d5",
+  Kotlin: "#cba6f7",
+  Swift: "#fab387",
+  Go: "#89dceb",
+  Ruby: "#f38ba8",
+  Rust: "#eba0ac",
+  Java: "#f9e2af",
+  Dart: "#89dceb",
+  "C++": "#f5c2e7",
+  C: "#b4befe",
+};
+
+export function renderLangsCard(langs) {
+  const W = 340;
+  const BAR_X = 25;
+  const BAR_W = W - 50;
+
+  // stacked bar segments, SMIL width grow staggered 80ms
+  let x = BAR_X;
+  const segments = langs
+    .map((l, i) => {
+      const w = Math.max(2, (l.pct / 100) * BAR_W);
+      const seg = `<rect x="${x.toFixed(1)}" y="52" width="0" height="8" fill="${LANG_COLORS[l.name] || "#9399b2"}">
+      <animate attributeName="width" from="0" to="${w.toFixed(1)}" dur="0.6s" begin="${(i * 0.08).toFixed(2)}s" fill="freeze"/></rect>`;
+      x += w;
+      return seg;
+    })
+    .join("\n    ");
+
+  // 2-column legend, 3 rows per column
+  const legend = langs
+    .map((l, i) => {
+      const col = Math.floor(i / 3);
+      const row = i % 3;
+      const lx = 25 + col * 155;
+      const ly = 92 + row * 29;
+      return `<circle cx="${lx + 4}" cy="${ly - 4}" r="4" fill="${LANG_COLORS[l.name] || "#9399b2"}"/>
+    <text x="${lx + 16}" y="${ly}" class="label">${l.name}</text><text x="${lx + 92}" y="${ly}" class="value">${l.pct.toFixed(1)}%</text>`;
+    })
+    .join("\n    ");
+
+  return `<svg width="${W}" height="213" viewBox="0 0 ${W} 213" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="What I write in">
+  <style>
+    .bg{fill:#1e1e2e}
+    .title{fill:#cba6f7;font:600 17px 'Segoe UI',system-ui,-apple-system,sans-serif}
+    .label{fill:#cdd6f4;font:400 13px 'Segoe UI',system-ui,-apple-system,sans-serif}
+    .value{fill:#a6e3a1;font:500 13px 'Segoe UI',system-ui,-apple-system,sans-serif}
+    .icon{fill:none;stroke:#cba6f7;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+    .sub{fill:#6c7086;font:600 10px 'Segoe UI',system-ui,sans-serif;letter-spacing:.4px}
+  </style>
+  <rect x="0.5" y="0.5" width="${W - 1}" height="212" rx="12" class="bg" stroke="#313244"/>
+
+ <g transform="translate(0,8)">
+  <!-- title glyph: code brackets, gently open once on load -->
+  <g transform="translate(25,14)" opacity="0">
+    <animate attributeName="opacity" from="0" to="1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1" keyTimes="0;1" values="0;1"/>
+    <path class="icon" d="M6 2L1 8l5 6">
+      <animateTransform attributeName="transform" type="translate" values="1.5 0;0 0" keyTimes="0;1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </path>
+    <path class="icon" d="M12 2l5 6-5 6">
+      <animateTransform attributeName="transform" type="translate" values="-1.5 0;0 0" keyTimes="0;1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </path>
+  </g>
+  <text x="52" y="30" class="title">What I write in</text>
+
+  <rect x="${BAR_X}" y="52" width="${BAR_W}" height="8" rx="4" fill="#313244"/>
+  <g clip-path="url(#barclip)">
+    ${segments}
+  </g>
+  <clipPath id="barclip"><rect x="${BAR_X}" y="52" width="${BAR_W}" height="8" rx="4"/></clipPath>
+
+  <g>
+    ${legend}
+  </g>
+
+  <text x="${W - 25}" y="180" text-anchor="end" class="sub">PUBLIC REPOS · BY BYTES</text>
+ </g>
+</svg>`;
+}
 
 function errorCard(msg) {
   return `<svg width="450" height="80" xmlns="http://www.w3.org/2000/svg">
