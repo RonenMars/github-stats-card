@@ -1,0 +1,7 @@
+name = "github-stats-card"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+
+# GITHUB_USERNAME is public config; GITHUB_TOKEN is a secret (set via: npx wrangler secret put GITHUB_TOKEN)
+[vars]
+GITHUB_USERNAME = "RonenMars"
