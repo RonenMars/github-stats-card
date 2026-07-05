@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Stats card — custom vs current</title>
+<style>
+body{background:#0d1117;margin:0;padding:32px;font-family:-apple-system,Segoe UI,sans-serif;color:#e6edf3;}
+h2{color:#8b949e;font-weight:600;font-size:14px;margin:28px 0 10px;}
+.wrap{max-width:1050px;margin:0 auto;}
+.note{color:#6e7681;font-size:12px;margin-top:6px;}
+img,object{border-radius:12px;}
+</style></head><body>
+<div class="wrap">
+<h2>▼ CUSTOM (Catppuccin Mocha, hand-authored SVG — GitHub rank icon instead of B+ letter). Static mock with your real numbers.</h2>
+<object data="stats-card-mock.svg" type="image/svg+xml" width="495" height="195"></object>
+<div class="note">This is the design. If you like it, it becomes the template a live backend fills in. Numbers are real (pulled earlier) but frozen in this mock.</div>
+
+<h2>▼ CURRENT (github-readme-stats-fast, catppuccin_mocha theme) — live, but on a community host.</h2>
+<img src="https://github-readme-stats-fast.vercel.app/api?username=RonenMars&show_icons=true&theme=catppuccin_mocha&hide_border=true&rank_icon=github&count_private=true" alt="current stats">
+<div class="note">Note: I added &rank_icon=github here too, so you can compare the rank-icon tweak on the existing card.</div>
+
+<h2>▼ CURRENT top-languages, TRIMMED (langs_count=6, hide html/shell)</h2>
+<img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=RonenMars&layout=compact&theme=catppuccin_mocha&hide_border=true&langs_count=6&hide=html,shell" alt="langs">
+
+<h2>▼ Streak card (catppuccin theme)</h2>
+<img src="https://streak-stats.demolab.com/?user=RonenMars&theme=catppuccin&hide_border=true" alt="streak">
+</div>
+</body></html>
