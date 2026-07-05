@@ -1,0 +1,59 @@
+<svg width="340" height="213" viewBox="0 0 340 213" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="What I write in">
+  <style>
+    .bg{fill:#1e1e2e}
+    .title{fill:#cba6f7;font:600 17px 'Segoe UI',system-ui,-apple-system,sans-serif}
+    .label{fill:#cdd6f4;font:400 13px 'Segoe UI',system-ui,-apple-system,sans-serif}
+    .value{fill:#a6e3a1;font:500 13px 'Segoe UI',system-ui,-apple-system,sans-serif}
+    .icon{fill:none;stroke:#cba6f7;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+    .sub{fill:#6c7086;font:600 10px 'Segoe UI',system-ui,sans-serif;letter-spacing:.4px}
+  </style>
+  <rect x="0.5" y="0.5" width="339" height="212" rx="12" class="bg" stroke="#313244"/>
+
+ <g transform="translate(0,8)">
+  <!-- title glyph: code brackets, gently open once on load -->
+  <g transform="translate(25,14)" opacity="0">
+    <animate attributeName="opacity" from="0" to="1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1" keyTimes="0;1" values="0;1"/>
+    <path class="icon" d="M6 2L1 8l5 6">
+      <animateTransform attributeName="transform" type="translate" values="1.5 0;0 0" keyTimes="0;1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </path>
+    <path class="icon" d="M12 2l5 6-5 6">
+      <animateTransform attributeName="transform" type="translate" values="-1.5 0;0 0" keyTimes="0;1" dur="0.9s" begin="0s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </path>
+  </g>
+  <text x="52" y="30" class="title">What I write in</text>
+
+  <rect x="25" y="52" width="290" height="8" rx="4" fill="#313244"/>
+  <g clip-path="url(#barclip)">
+    <rect x="25.0" y="52" width="0" height="8" fill="#89b4fa">
+      <animate attributeName="width" from="0" to="234.5" dur="0.6s" begin="0.00s" fill="freeze"/></rect>
+    <rect x="259.5" y="52" width="0" height="8" fill="#f9e2af">
+      <animate attributeName="width" from="0" to="17.6" dur="0.6s" begin="0.08s" fill="freeze"/></rect>
+    <rect x="277.1" y="52" width="0" height="8" fill="#94e2d5">
+      <animate attributeName="width" from="0" to="17.5" dur="0.6s" begin="0.16s" fill="freeze"/></rect>
+    <rect x="294.6" y="52" width="0" height="8" fill="#cba6f7">
+      <animate attributeName="width" from="0" to="9.6" dur="0.6s" begin="0.24s" fill="freeze"/></rect>
+    <rect x="304.2" y="52" width="0" height="8" fill="#fab387">
+      <animate attributeName="width" from="0" to="6.5" dur="0.6s" begin="0.32s" fill="freeze"/></rect>
+    <rect x="310.6" y="52" width="0" height="8" fill="#89dceb">
+      <animate attributeName="width" from="0" to="4.4" dur="0.6s" begin="0.40s" fill="freeze"/></rect>
+  </g>
+  <clipPath id="barclip"><rect x="25" y="52" width="290" height="8" rx="4"/></clipPath>
+
+  <g>
+    <circle cx="29" cy="88" r="4" fill="#89b4fa"/>
+    <text x="41" y="92" class="label">TypeScript</text><text x="117" y="92" class="value">80.9%</text>
+    <circle cx="29" cy="117" r="4" fill="#f9e2af"/>
+    <text x="41" y="121" class="label">JavaScript</text><text x="117" y="121" class="value">6.1%</text>
+    <circle cx="29" cy="146" r="4" fill="#94e2d5"/>
+    <text x="41" y="150" class="label">Python</text><text x="117" y="150" class="value">6.0%</text>
+    <circle cx="184" cy="88" r="4" fill="#cba6f7"/>
+    <text x="196" y="92" class="label">Kotlin</text><text x="272" y="92" class="value">3.3%</text>
+    <circle cx="184" cy="117" r="4" fill="#fab387"/>
+    <text x="196" y="121" class="label">Swift</text><text x="272" y="121" class="value">2.2%</text>
+    <circle cx="184" cy="146" r="4" fill="#89dceb"/>
+    <text x="196" y="150" class="label">Go</text><text x="272" y="150" class="value">1.5%</text>
+  </g>
+
+  <text x="315" y="180" text-anchor="end" class="sub">PUBLIC REPOS · BY BYTES</text>
+ </g>
+</svg>

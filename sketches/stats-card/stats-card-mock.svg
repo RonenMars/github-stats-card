@@ -1,0 +1,50 @@
+<svg width="495" height="195" viewBox="0 0 495 195" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ronen Mars GitHub stats">
+  <style>
+    .bg { fill: #1e1e2e; }
+    .card { stroke: #313244; stroke-width: 1; rx: 12; }
+    .title { fill: #cba6f7; font: 700 18px 'Segoe UI', system-ui, sans-serif; }
+    .label { fill: #cdd6f4; font: 600 13px 'Segoe UI', system-ui, sans-serif; }
+    .value { fill: #a6e3a1; font: 700 13px 'Segoe UI', system-ui, sans-serif; }
+    .icon  { fill: #f5c2e7; }
+    .rankletter { fill: #cba6f7; font: 800 22px 'Segoe UI', system-ui, sans-serif; }
+    .ranklbl { fill: #6c7086; font: 600 10px 'Segoe UI', system-ui, sans-serif; letter-spacing: .5px; }
+    .ring-bg { stroke: #313244; }
+    .ring-fg { stroke: #cba6f7; }
+  </style>
+  <rect x="0.5" y="0.5" width="494" height="194" rx="12" class="bg card"/>
+  <text x="25" y="34" class="title">Ronen Mars' GitHub Stats</text>
+
+  <!-- left column: metrics -->
+  <g transform="translate(25, 60)">
+    <g transform="translate(0,0)">
+      <path class="icon" d="M8 0l2.35 4.76L15.6 5.5l-3.8 3.7.9 5.25L8 11.98 3.3 14.45l.9-5.25L.4 5.5l5.25-.74z"/>
+      <text x="26" y="12" class="label">Total Stars Earned:</text><text x="215" y="12" class="value">3</text>
+    </g>
+    <g transform="translate(0,28)">
+      <circle class="icon" cx="8" cy="8" r="7" fill="none" stroke="#f5c2e7" stroke-width="2"/><path stroke="#f5c2e7" stroke-width="2" d="M8 4v4l3 2"/>
+      <text x="26" y="12" class="label">Total Commits (2026):</text><text x="215" y="12" class="value">2.4k</text>
+    </g>
+    <g transform="translate(0,56)">
+      <path class="icon" d="M5 3a2 2 0 100 4 2 2 0 000-4zM5 9v3M11 5a2 2 0 100 4 2 2 0 000-4z" fill="none" stroke="#f5c2e7" stroke-width="2"/>
+      <text x="26" y="12" class="label">Total PRs:</text><text x="215" y="12" class="value">1.9k</text>
+    </g>
+    <g transform="translate(0,84)">
+      <circle cx="8" cy="8" r="7" fill="none" stroke="#f5c2e7" stroke-width="2"/><circle cx="8" cy="8" r="1.5" class="icon"/>
+      <text x="26" y="12" class="label">Total Issues:</text><text x="215" y="12" class="value">9</text>
+    </g>
+    <g transform="translate(0,112)">
+      <rect x="1" y="2" width="14" height="11" rx="2" fill="none" stroke="#f5c2e7" stroke-width="2"/>
+      <text x="26" y="12" class="label">Contributed to (2026):</text><text x="215" y="12" class="value">11</text>
+    </g>
+  </g>
+
+  <!-- right: GitHub rank icon (not B+ letter) -->
+  <g transform="translate(390, 97)">
+    <circle r="40" class="ring-bg" fill="none" stroke-width="6"/>
+    <circle r="40" class="ring-fg" fill="none" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="251" stroke-dashoffset="55" transform="rotate(-90)"/>
+    <!-- GitHub mark instead of a letter grade -->
+    <path class="icon" transform="translate(-13,-13) scale(1.1)"
+      d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 015.8 0C17.3 4.8 18.3 5.1 18.3 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5A11.5 11.5 0 0023.5 12C23.5 5.7 18.3.5 12 .5z"/>
+  </g>
+</svg>

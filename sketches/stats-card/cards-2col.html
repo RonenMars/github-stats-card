@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Stats cards — 2-column comparison</title>
+<style>
+body{background:#0d1117;margin:0;padding:32px;font-family:-apple-system,Segoe UI,sans-serif;color:#e6edf3;}
+.wrap{max-width:1000px;margin:0 auto;}
+h1{font-size:18px;font-weight:600;margin:0 0 4px;}
+.sub{color:#8b949e;font-size:13px;margin-bottom:24px;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.col h2{font-size:13px;color:#8b949e;font-weight:600;margin:0 0 10px;text-transform:uppercase;letter-spacing:.5px;}
+.metrics{margin-top:20px;font-size:13px;color:#8b949e;line-height:1.7;}
+.metrics b{color:#e6edf3;}.drop{color:#f85149;}.keep{color:#3fb950;}
+object{display:block;}
+</style></head><body>
+<div class="wrap">
+<h1>GitHub Stats Card — Current design vs Catppuccin custom (all-time)</h1>
+<div class="sub">All-time framing, values in {N}K notation. Dropped weak stats (stars 3, issues 9).</div>
+<div class="grid">
+  <div class="col"><h2>Column 1 — Current design / metrics</h2>
+    <object data="stats-card-current.svg" type="image/svg+xml" width="450" height="200"></object></div>
+  <div class="col"><h2>Column 2 — Catppuccin, all-time metrics</h2>
+    <object data="stats-card-catppuccin.svg" type="image/svg+xml" width="450" height="205"></object></div>
+</div>
+<div class="metrics">
+  <p><span class="drop">Dropped:</span> Total Stars Earned (3) · Total Issues (9) · "Contributed last year" (11).</p>
+  <p><span class="keep">All-time:</span> <b>Commits 3.5K</b> · <b>PRs 2.2K</b> · <b>Public Repos 39</b> · <b>Merged PRs 1.8K</b> · <b>PR Reviews 512</b> · since 2014.</p>
+  <p style="color:#6e7681">Note: all-time commits (3,491) = GitHub's attributed contribution total (2019+); consistent with github-readme-stats' basis.</p>
+</div>
+</div>
+</body></html>
